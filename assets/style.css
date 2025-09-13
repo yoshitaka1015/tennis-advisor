@@ -1,40 +1,252 @@
-/* === Feedback page fixes === */
+/* Tennis Advisor — Wimbledon theme
+   AppColor と同じパレット（ライト/ダーク自動切替）
+   背景=クリーム, 見出し=深緑, リンク=紫, 枠=淡いセパレータ
+*/
 
-/* カードは純粋な角丸の矩形に。疑似要素や過剰な影を排除 */
-.card {
-  background: var(--card);
-  border: 1px solid var(--sep);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: none;
+:root {
+  color-scheme: light dark;
+
+  /* Light */
+  --bg: #F6F5EF;
+  --card: #FFFFFF;
+  --text: #0B0C0B;
+  --text2: #4A4D49;
+  --accent: #1E4D2B;   /* 深緑 */
+  --accent2: #5A2A83;  /* 紫 */
+  --sep: #E6E7E2;
+
+  /* spacing & layout */
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,.05), 0 6px 18px rgba(0,0,0,.06);
+  --maxw: 820px;
+  --line: 1.7;
+
+  /* buttons */
+  --btn-h: 40px;
+  --btn-pad-x: 14px;
+  --btn-font: 0.95rem;
 }
 
-/* 見出しと説明まわりの余白を整える（ズレ防止） */
-.card > h2 { margin: 4px 0 10px; }
-.card > .desc { margin: 0 0 14px; }
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg: #0F1110;
+    --card: #181A19;
+    --text: #F5F5F2;
+    --text2: #B9BDB6;
+    --accent: #4CA96A;   /* 深緑のライト版 */
+    --accent2: #B18AD3;  /* 紫のライト版 */
+    --sep: #2A2C29;
+    --shadow: 0 0 0 rgba(0,0,0,0); /* ダークは影を弱める */
+  }
+}
 
-/* 入力フィールドは透明な背景（カードと二重の角丸が重なって見えないように） */
-.field { margin: 12px 0; }
-.field label { display: block; margin-bottom: 6px; color: var(--text); }
-textarea, input[type="text"], input[type="email"] {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--sep);
-  border-radius: 10px;
-  background: transparent;
+/* --- base --- */
+
+* { box-sizing: border-box; }
+html, body { padding: 0; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/var(--line) -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Sans",
+        "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.container{
+  max-width: var(--maxw);
+  margin: 40px auto 96px;
+  padding: 0 20px;
+}
+
+/* header（ベースの <header> をそのまま使用） */
+header h1{
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0 0 12px;
+  color: var(--text);
+  padding-bottom: 8px;
+  background:
+    linear-gradient(90deg, var(--accent) 0 50%, var(--accent2) 50% 100%) bottom / 120px 4px no-repeat;
+  border-bottom: 1px solid color-mix(in oklab, var(--sep) 70%, transparent);
+}
+header p{
+  margin: 6px 0 0;
+  color: var(--text2);
+}
+
+/* --- headings --- */
+
+h1,h2,h3 {
+  line-height: 1.3;
+  margin: 0 0 14px;
   color: var(--text);
 }
+h2{ font-size: 1.25rem; margin-top: 26px; }
+h3{ font-size: 1.05rem; margin-top: 18px; color: var(--accent); }
 
-/* 2カラムの折り返し */
-.grid2 {
+/* --- text --- */
+
+p, ul, ol, li, blockquote, table, pre, code { margin: 0 0 14px; }
+ul, ol { padding-left: 1.2rem; }
+li + li { margin-top: 4px; }
+strong { font-weight: 700; }
+em { font-style: normal; color: var(--accent2); }
+
+/* --- links --- */
+
+a { color: var(--accent2); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; filter: brightness(1.05); }
+
+/* --- cards & callouts（既存の .card/.callout クラス名はそのまま） --- */
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--sep);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin: 18px 0;
+}
+.card h2{ margin-top: 0; }
+.card .desc{ color: var(--text2); }
+
+/* 左帯つきの強調 */
+.callout{
+  background: var(--card);
+  border: 1px solid var(--sep);
+  border-left: 6px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  margin: 18px 0 22px;
+}
+.callout.warn { border-left-color: #c08a00; }
+.callout.tip  { border-left-color: var(--accent2); }
+
+/* トップのカードグリッド（既存の .grid を踏襲） */
+.grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 16px;
+}
+@media (max-width: 768px){
+  .grid{ grid-template-columns: 1fr; }
+}
+
+/* --- buttons（既存の .btn と .btn.secondary を踏襲） --- */
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  height: var(--btn-h);
+  padding: 0 var(--btn-pad-x);
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 75%, #0000);
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 92%, #0000),
+                                      color-mix(in oklab, var(--accent) 84%, #0000));
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--btn-font);
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(0,0,0,.06);
+}
+.btn:hover{ filter: brightness(1.03); }
+.btn:active{ transform: translateY(1px); }
+
+.btn.secondary{
+  border-color: color-mix(in oklab, var(--accent2) 75%, #0000);
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent2) 92%, #0000),
+                                      color-mix(in oklab, var(--accent2) 84%, #0000));
+}
+
+/* --- feedback form（既存の .field / .grid2 / .hidden を踏襲） --- */
+
+.field{ margin: 14px 0; }
+.field label{
+  display:block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.field .req{
+  color: var(--accent2);
+  font-weight: 700;
+  margin-left: 6px;
+  font-size: .9em;
+}
+input[type="text"],
+input[type="email"],
+textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--sep);
+  color: var(--text);
+  background: color-mix(in oklab, var(--card) 85%, var(--bg));
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,.02);
+}
+textarea{ resize: vertical; min-height: 140px; }
+input::placeholder, textarea::placeholder{ color: color-mix(in oklab, var(--text2) 85%, #0000); }
+input:focus, textarea:focus{
+  border-color: color-mix(in oklab, var(--accent2) 70%, #0000);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent2) 15%, #0000);
+}
+
+.grid2{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
-@media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+@media (max-width: 640px){
+  .grid2{ grid-template-columns: 1fr; }
+}
 
-/* 送信後メッセージ切替 */
-.hidden { display: none !important; }
+.hidden{ display: none !important; }
 
-/* 必須マーク */
-.req { color: var(--accent2); font-weight: 600; }
+/* --- tables / code --- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--sep);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--sep); }
+th { text-align: left; color: var(--text2); font-weight: 600; }
+
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Roboto Mono", monospace;
+  background: color-mix(in oklab, var(--card) 60%, var(--bg));
+  border: 1px solid var(--sep);
+  border-radius: 8px;
+}
+code { padding: 2px 6px; }
+pre { padding: 12px; overflow: auto; }
+
+/* --- misc --- */
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--sep);
+  margin: 22px 0;
+}
+
+.footer{
+  margin-top: 28px;
+  color: var(--text2);
+  font-size: .9rem;
+}
+
+blockquote{
+  margin: 14px 0;
+  padding: 10px 14px;
+  border-left: 4px solid var(--accent2);
+  background: color-mix(in oklab, var(--card) 70%, var(--bg));
+  border-radius: 10px;
+}
