@@ -2,21 +2,20 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="color-scheme" content="dark" />
-  <title>{{ page.title }} | {{ site.title }}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ page.seo_title | default: page.title | default: site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
 </head>
 <body>
   <div class="container">
-    <h1 class="page-title">{{ page.title }}</h1>
-    <div class="card content">
-      {{ content }}
-    </div>
+    <header>
+      <!-- ここを page.title ではなく site.title 固定に -->
+      <h1>{{ site.title }}</h1>
+    </header>
 
-    {% if page.show_updated != false %}
-    <p class="updated">最終更新日：{{ page.updated | default: site.time | date: "%Y-%m-%d" }}</p>
-    {% endif %}
+    {{ content }}
+
+    <footer>© {{ site.time | date: '%Y' }} {{ site.title }}</footer>
   </div>
 </body>
 </html>
