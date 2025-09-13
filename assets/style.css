@@ -112,3 +112,29 @@ a:hover{text-decoration:underline}
   margin:8px 0;
 }
 .form .hp{position:absolute; left:-5000px; opacity:0}
+
+
+
+/* すでにあるテーマに追記してください */
+.hidden { display: none !important; }
+.field { display:block; margin: 12px 0; }
+.field > span { display:block; margin-bottom:6px; color: var(--text2); font-size: 0.95rem; }
+.field input, .field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--sep);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+}
+.grid-2 { display:grid; gap:12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+.hp { position:absolute; left:-9999px; opacity:0; }
+.alert {
+  margin-top: 10px;
+  background: #8b000033;
+  border: 1px solid #8b000066;
+  color: #ffdddd;
+  padding: 10px 12px; border-radius: 10px;
+}
+.req { color: var(--accent2); font-style: normal; font-weight: 600; margin-left:6px; }
