@@ -1,91 +1,114 @@
+/* =========================
+   Tennis Advisor – Wimbledon-ish Dark Theme
+   ========================= */
 :root{
-  /* Wimbledon-ish dark palette */
   --bg:#0F1110;
   --card:#181A19;
   --text:#F5F5F2;
   --text2:#B9BDB6;
-  --accent:#1E4D2B;   /* green */
-  --accent2:#5A2A83;  /* purple */
-  --sep:rgba(255,255,255,.10);
+  --sep:#2A2C29;
+  --accent:#1E4D2B;   /* 深いグリーン */
+  --accent-2:#7E57C2; /* パープル系 */
+  --accent-3:#4CA96A; /* 補助グリーン（ボタン用グラデ） */
 }
 
-* { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
-
+*{box-sizing:border-box}
+html,body{height:100%}
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font:16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  -webkit-font-smoothing:antialiased;
+  line-height:1.65;
 }
 
 .container{
-  max-width: 900px;            /* PC では広めに */
-  width: 100%;
-  margin: 0 auto;
-  padding: 24px 18px;          /* スマホ左右余白 */
+  width:min(980px,92vw);
+  margin-inline:auto;
+  padding:24px;
 }
 
-.page-title{
-  font-size: clamp(20px, 4.5vw, 28px);
-  margin: 0 0 12px;
-  letter-spacing: .02em;
+.page-header{margin:8px 0 20px}
+.page-header .lead{color:var(--text2); margin:6px 0 0}
+.page-header .rule{
+  height:4px; margin-top:14px; border-radius:99px;
+  background:linear-gradient(90deg,var(--accent) 0%, var(--accent-2) 80%);
+}
+
+h1{font-size:28px; margin:0 0 4px}
+h2{font-size:20px; margin:0 0 6px}
+h3{font-size:18px; margin:20px 0 6px}
+p{margin:0 0 12px}
+
+a{color:#B8D7C3; text-decoration:none}
+a:hover{text-decoration:underline}
+
+.back{display:inline-block; margin-bottom:10px; color:var(--text2)}
+.muted{color:var(--text2)}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+@media (max-width:760px){
+  .grid{grid-template-columns:1fr}
 }
 
 .card{
-  background: var(--card);
-  border: 1px solid var(--sep);
-  border-radius: 14px;
-  padding: 18px 20px;
-  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  background:var(--card);
+  border:1px solid var(--sep);
+  border-radius:16px;
+  padding:16px;
 }
 
-.updated{
-  color: var(--text2);
-  font-size: .9rem;
-  margin: 14px 2px 0;
+.desc{color:var(--text2); margin-bottom:12px}
+
+.list{margin:8px 0 14px; padding-left:20px}
+.list li{margin:2px 0}
+
+.btn{
+  display:inline-block;
+  padding:10px 16px;
+  font-weight:600;
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent) 0%, var(--accent-3) 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.06) inset;
+  transition:transform .06s ease, opacity .2s ease;
+}
+.btn:hover{transform:translateY(-1px); text-decoration:none}
+.btn.secondary{
+  background:linear-gradient(90deg,var(--accent-2) 0%, #B18AD3 100%);
 }
 
-/* Typography */
-.content > * { margin: 0 0 12px; }
-h2, h3 { margin-top: 16px; }
-h2 { font-size: clamp(18px, 4vw, 22px); }
-h3 { font-size: clamp(16px, 3.5vw, 19px); }
-a{ color: var(--accent2); text-decoration: none; }
-a:hover{ color: var(--accent); text-decoration: underline; }
-
-/* Lists & spacing */
-ul, ol { padding-left: 1.2rem; }
-li { margin: .25rem 0; }
-
-/* Images / Media / Tables should never overflow */
-img, video, iframe { max-width: 100%; height: auto; display: block; }
-
-/* Tables wrap into a scroll container on small screens */
-table { width: 100%; border-collapse: collapse; }
-th, td { border-bottom: 1px solid var(--sep); padding: 8px 10px; text-align: left; }
-.table-scroll { overflow-x: auto; }
-.table-scroll > table { min-width: 520px; } /* 必要に応じて横スクロール */
-
-/* Code / pre blocks: allow horizontal scroll instead of breaking layout */
-pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-pre{
-  background: #0B0D0C;
-  border: 1px solid var(--sep);
-  border-radius: 10px;
-  padding: 12px;
-  overflow-x: auto;            /* 横に流す */
-  -webkit-overflow-scrolling: touch;
+.footer{
+  margin:24px 8px 0;
+  color:var(--text2);
+  font-size:12px;
 }
 
-/* Long words/URLs should wrap instead of causing overflow */
-.content { overflow-wrap: anywhere; word-break: break-word; }
-
-/* Section dividers (optional) */
-hr { border: none; border-top: 1px solid var(--sep); margin: 20px 0; }
-
-/* Mobile tweaks */
-@media (max-width: 480px){
-  .card { border-radius: 12px; padding: 16px; }
+/* Form */
+.form .field{margin:12px 0}
+.form label{display:block; font-weight:600; margin-bottom:6px}
+.form input[type="text"],
+.form input[type="email"],
+.form select,
+.form textarea{
+  width:100%;
+  background:#111312;
+  color:var(--text);
+  border:1px solid var(--sep);
+  border-radius:10px;
+  padding:10px 12px;
+  outline:none;
 }
+.form textarea{line-height:1.5}
+.form .details summary{
+  cursor:pointer;
+  color:var(--text2);
+  margin:8px 0;
+}
+.form .hp{position:absolute; left:-5000px; opacity:0}
